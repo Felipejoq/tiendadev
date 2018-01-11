@@ -34,16 +34,15 @@ class SellerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Seller $seller)
     {
         /**
          * Para buscar un vendedor en específico, se hace una búsqueda dentro de los vendedores
          * que tengan al menos un producto, luego se hace la búsqueda por ID.
          * Se devuelve una respuesta mediante el controlador general y su método showOne.
          */
-        $vendedor = Seller::has('products')->findOrFail($id);
 
-        return $this->showOne($vendedor);
+        return $this->showOne($seller);
     }
 
 }

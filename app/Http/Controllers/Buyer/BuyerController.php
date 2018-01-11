@@ -27,10 +27,10 @@ class BuyerController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Buyer $buyer
      * @return \Illuminate\Http\Response
      */
-    public function show($id){
+    public function show(Buyer $buyer){
 
         /**
          * Para buscar un comprador específico, se hace lo mismo, se buscan los compradores
@@ -38,9 +38,8 @@ class BuyerController extends ApiController
          * por lo tanto no se encuentra.
          * Ocupando el método showOne del controlador general se entrega la respuesta en formato Json.
          */
-        $comprador = Buyer::has('transactions')->findOrFail($id);
 
-        return $this->showOne($comprador);
+        return $this->showOne($buyer);
 
     }
 
