@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-/*
+/**
  * Buyer routes
  */
 Route::resource('buyers', 'Buyer\BuyerController',['only' => ['index','show']]);
@@ -23,7 +23,7 @@ Route::resource('buyers.sellers', 'Buyer\BuyerSellerController',['only' => ['ind
 Route::resource('buyers.categories', 'Buyer\BuyerCategoryController',['only' => ['index']]);
 
 
-/*
+/**
  * Categories routes
  */
 Route::resource('categories', 'Category\CategoryController',['except' => ['create','edit']]);
@@ -32,7 +32,7 @@ Route::resource('categories.sellers', 'Category\CategorySellerController',['only
 Route::resource('categories.transactions', 'Category\CategoryTransactionController',['only' => ['index']]);
 Route::resource('categories.buyers', 'Category\CategoryBuyerController',['only' => ['index']]);
 
-/*
+/**
  * Products routes
  */
 Route::resource('products', 'Product\ProductController',['only' => ['index','show']]);
@@ -41,14 +41,14 @@ Route::resource('products.buyers', 'Product\ProductBuyerController',['only' => [
 Route::resource('products.categories', 'Product\ProductCategoryController',['only' => ['index','update','destroy']]);
 Route::resource('products.buyers.transactions', 'Product\ProductBuyerTransactionController',['only' => ['store']]);
 
-/*
+/**
  * Transactions routes
  */
 Route::resource('transactions', 'Transaction\TransactionController',['only' => ['index','show']]);
 Route::resource('transactions.categories', 'Transaction\TransactionCategoryController',['only' => ['index']]);
 Route::resource('transactions.sellers', 'Transaction\TransactionSellerController',['only' => ['index']]);
 
-/*
+/**
  * Sellers routes
  */
 Route::resource('sellers', 'Seller\SellerController',['only' => ['index','show']]);
@@ -57,9 +57,12 @@ Route::resource('sellers.categories', 'Seller\SellerCategoryController',['only' 
 Route::resource('sellers.buyers', 'Seller\SellerBuyerController',['only' => ['index']]);
 Route::resource('sellers.products', 'Seller\SellerProductController',['except' => ['create','edit','show']]);
 
-/*
+/**
  * Users routes
  */
 Route::resource('users', 'User\UserController', ['except' => ['create','edit']]);
 Route::name('verify')->get('users/verify/{token}','User\UserController@verify');
+Route::name('resend')->get('users/{user}/resend','User\UserController@resend');
+
+
 
