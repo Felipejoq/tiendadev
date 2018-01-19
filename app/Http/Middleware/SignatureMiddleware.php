@@ -13,7 +13,7 @@ class SignatureMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $header = 'X-Name!!!!!')
+    public function handle($request, Closure $next, $header = 'X-Name!')
     {
         $response = $next($request);
 

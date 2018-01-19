@@ -63,7 +63,7 @@ class CategoryController extends ApiController
     public function update(Request $request, Category $category)
     {
 
-        $category->fill($request->intersect([
+        $category->fill($request->only([
             'name',
             'description',
         ]));
@@ -81,8 +81,9 @@ class CategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Category $category
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Category $category)
     {

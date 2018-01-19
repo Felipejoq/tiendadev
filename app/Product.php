@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\ProductTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,6 +27,8 @@ class Product extends Model
         'image',
         'seller_id',
     ];
+
+    public $transformer = ProductTransformer::class;
 
     public function estaDisponible(){
         return $this->status == Product::PRODUCTO_DISPONIBLE;
