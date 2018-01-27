@@ -12,6 +12,7 @@ class ProductBuyerController extends ApiController
     public function __construct()
     {
         parent::__construct();
+        $this->middleware('can:');
     }
     /**
      * Display a listing of the resource.
@@ -20,6 +21,8 @@ class ProductBuyerController extends ApiController
      */
     public function index(Product $product)
     {
+        $this->allowAdminActions();
+
         $buyers = $product->transactions()
             ->with('buyer')
             ->get()

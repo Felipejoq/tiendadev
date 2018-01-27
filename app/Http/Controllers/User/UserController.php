@@ -25,6 +25,10 @@ class UserController extends ApiController
         $this->middleware('client.credentials')->only(['store', 'resend']);
         $this->middleware('auth:api')->except(['store','verify', 'resend']);
         $this->middleware('transform.input:'. UserTransformer::class)->only(['store','update']);
+
+        $this->middleware('scope:manage-account')->only('show','update');
+        $this->middleware('can:view,user')->only('show');
+        $this->middleware('can:delete,user')->only('destroy');
     }
 
     /**
@@ -33,6 +37,8 @@ class UserController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        $this->allowAdminActions();
+
         /**
          * Usuarios son todos los registrados en el sistema, tengan estos el rol de vendedores o compradores.
          */
@@ -90,8 +96,10 @@ class UserController extends ApiController
      * @param  \Illuminate\Http\Request $request
      * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, User $user){
+
 
         $rules = [
             'email' => 'email|unique:users,email,'.$user->id,
@@ -116,6 +124,8 @@ class UserController extends ApiController
         }
 
         if ($request->has('admin')){
+            $this->allowAdminActions();
+
             if (!$user->esVerificado()){
                 return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar su valor de administrador',409);
             }

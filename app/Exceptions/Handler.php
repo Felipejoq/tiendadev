@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
+use Asm89\Stack\CorsService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -59,6 +60,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $response = $this->handlerExceptions($request,$exception);
+
+        app(CorsService::class)->addActualRequestHeaders($response, $request);
+
+        return $response;
+
+    }
+
+    public function handlerExceptions($request, Exception $exception){
         if ($exception instanceof ValidationException){
             return $this->convertValidationExceptionToResponse($exception,$request);
         }
@@ -108,8 +118,6 @@ class Handler extends ExceptionHandler
         }else{
             return $this->errorResponse('Falla inesperada, por favor intente en otro momento.',500);
         }
-
-
     }
 
     /**

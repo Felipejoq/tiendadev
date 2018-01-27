@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Traits\ApiResponser;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ApiController extends Controller
 {
@@ -15,6 +17,15 @@ class ApiController extends Controller
 
         $this->middleware('auth:api');
 
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    protected function allowAdminActions(){
+        if (Gate::denies('admin-actions')){
+            throw new AuthorizationException('Esta acción no es permitida');
+        }
     }
 
 }

@@ -31,11 +31,14 @@ class CategoryController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
+        $this->allowAdminActions();
+
         $rules = [
             'name' => 'required',
             'description' => 'required',
@@ -70,6 +73,8 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, Category $category)
     {
+        $this->allowAdminActions();
+
 
         $category->fill($request->only([
             'name',
@@ -95,6 +100,8 @@ class CategoryController extends ApiController
      */
     public function destroy(Category $category)
     {
+        $this->allowAdminActions();
+
         $category->delete();
 
         return $this->showOne($category);
